@@ -50,11 +50,11 @@ class _MyAppState extends State<MyApp> {
         primarySwatch: _primarySwatch,
         accentColor: _accentColor,
       ),
-      initialRoute: '/',
+      initialRoute: '/Home',
       routes: {
-        '/': (context) => HomeScreen(),
-        '/favourite': (context) => Favourite(),
-        '/setting': (context) => SettingsScreen(
+        '/Home': (context) => HomeScreen(),
+        '/Favourite': (context) => Favourite(),
+        '/Setting': (context) => SettingsScreen(
             updateBrightness, updatePrimarySwatch, updateAccentColor),
       },
     );

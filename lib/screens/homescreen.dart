@@ -25,13 +25,13 @@ class _HomeScreenState extends State<HomeScreen> {
           },
         ),
       ),
-      drawer: Drawerr(),
+      drawer: Drawerr(scaffold: _scaffold,),
       key: _scaffold,
       body: Stack(
         children: <Widget>[
           Center(
             child: RaisedButton(onPressed: () {
-              Navigator.pushNamed(_scaffold.currentContext, '/setting');
+              Navigator.pushNamed(_scaffold.currentContext, '/Setting');
             }),
           )
         ],
