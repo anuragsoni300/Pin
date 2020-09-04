@@ -20,6 +20,9 @@ class _DrawerrState extends State<Drawerr> {
         color: Theme.of(context).primaryColor,
         child: Column(
           children: [
+            SizedBox(
+              height: 10,
+            ),
             Container(
               width: double.infinity,
               color: Theme.of(context).primaryColor,
@@ -29,7 +32,8 @@ class _DrawerrState extends State<Drawerr> {
                 child: Column(
                   children: <Widget>[
                     ClayContainer(
-                      curveType: CurveType.convex,
+                      depth: 50,
+                      curveType: CurveType.concave,
                       color: Theme.of(context).primaryColor,
                       borderRadius: 50,
                       width: 100,
@@ -56,11 +60,10 @@ class _DrawerrState extends State<Drawerr> {
                     child: GestureDetector(
                       onTap: () {
                         String texts = text[index];
-                        Navigator.pushNamed(
-                            scaffold.currentContext, '/Setting');
+                        Navigator.pushNamed(scaffold.currentContext, '/$texts');
                       },
                       child: ClayContainer(
-                        curveType: CurveType.convex,
+                        curveType: CurveType.concave,
                         borderRadius: 10,
                         height: 60,
                         color: Theme.of(context).primaryColor,

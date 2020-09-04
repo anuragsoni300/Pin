@@ -20,21 +20,15 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Icon(Icons.search),
           onPressed: () {
             Scaffold.of(context).openDrawer();
-            Scaffold.of(context).showSnackBar(SnackBar(
-                duration: Duration(milliseconds: 400), content: Text('data')));
           },
         ),
       ),
-      drawer: Drawerr(scaffold: _scaffold,),
+      drawer: Drawerr(
+        scaffold: _scaffold,
+      ),
       key: _scaffold,
       body: Stack(
-        children: <Widget>[
-          Center(
-            child: RaisedButton(onPressed: () {
-              Navigator.pushNamed(_scaffold.currentContext, '/Setting');
-            }),
-          )
-        ],
+        children: <Widget>[],
       ),
     );
   }
