@@ -5,10 +5,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 class SettingsScreen extends StatefulWidget {
   final Function updateBrightness;
   final Function updatePrimarySwatch;
-  final Function updateAccentColor;final Function updatecolor;
+  final Function updateAccentColor;
 
-  SettingsScreen(
-      this.updateBrightness, this.updatePrimarySwatch, this.updateAccentColor,this.updatecolor);
+  SettingsScreen(this.updateBrightness, this.updatePrimarySwatch,
+      this.updateAccentColor);
 
   @override
   _SettingsScreenState createState() => _SettingsScreenState();
@@ -19,7 +19,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
   int _brightness;
   String _primarySwatch;
   String _accentColor;
-  String _color;
 
   @override
   void initState() {
@@ -34,8 +33,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
       _primarySwatch =
           _sharedPreferences.getString(kPreferencePrimarySwatchKey) ?? 'Indigo';
       _accentColor =
-          _sharedPreferences.getString(kPreferenceAccentColorKey) ?? 'Pink';
-      _color=
           _sharedPreferences.getString(kPreferenceAccentColorKey) ?? 'Pink';
     });
   }

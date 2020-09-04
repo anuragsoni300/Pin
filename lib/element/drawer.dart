@@ -2,39 +2,44 @@ import 'package:flutter/material.dart';
 import 'package:clay_containers/clay_containers.dart';
 
 class Drawerr extends StatefulWidget {
-  final Color color;
-  Drawerr(this.color);
   @override
-  _DrawerrState createState() => _DrawerrState(color);
+  _DrawerrState createState() => _DrawerrState();
 }
 
 class _DrawerrState extends State<Drawerr> {
-  final Color color;
-  _DrawerrState(this.color);
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      child: Container(
-        color: color,
-        child: DrawerHeader(
-          decoration: BoxDecoration(
-            color: color,
+      child: Column(
+        children: [
+          Container(
+            width: double.infinity,
+            color: Theme.of(context).primaryColor,
+            child: DrawerHeader(
+              decoration: BoxDecoration(),
+              child: Column(
+                children: <Widget>[
+                  ClayContainer(
+                    color: Theme.of(context).primaryColor,
+                    borderRadius: 50,
+                    width: 100,
+                    height: 100,
+                    child: CircleAvatar(
+                      backgroundColor: Theme.of(context).primaryColor,
+                      child: Image.asset(
+                        'assets/pin-logo.png',
+                        color:
+                            Theme.of(context).primaryColor == Color(0xff2196f3)
+                                ? Color(0xff2196f3)
+                                : Colors.white,
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
           ),
-          child: Column(
-            children: <Widget>[
-              ClayContainer(
-                color: color,
-                borderRadius: 50,
-                width: 100,
-                height: 100,
-                child: CircleAvatar(
-                  backgroundColor: color,
-                  child: Image.asset('assets/pin-logo.png'),
-                ),
-              )
-            ],
-          ),
-        ),
+        ],
       ),
     );
   }

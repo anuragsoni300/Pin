@@ -19,7 +19,6 @@ class _MyAppState extends State<MyApp> {
   Brightness _brightness = Brightness.light;
   MaterialColor _primarySwatch = Colors.indigo;
   MaterialAccentColor _accentColor = Colors.pinkAccent;
-  Color _color = Colors.white;
 
   @override
   void initState() {
@@ -53,10 +52,10 @@ class _MyAppState extends State<MyApp> {
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => HomeScreen(_color),
+        '/': (context) => HomeScreen(),
         '/favourite': (context) => Favourite(),
         '/setting': (context) => SettingsScreen(
-            updateBrightness, updatePrimarySwatch, updateAccentColor, updatecolor),
+            updateBrightness, updatePrimarySwatch, updateAccentColor),
       },
     );
   }
@@ -64,12 +63,7 @@ class _MyAppState extends State<MyApp> {
   void updateBrightness(Brightness brightness) {
     setState(() {
       _brightness = brightness;
-    });
-  }
-
-  void updatecolor(Color color) {
-    setState(() {
-      _color = color;
+      print(Theme.of(context).primaryColor);
     });
   }
 

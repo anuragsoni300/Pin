@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:pin/element/drawer.dart';
 
 class HomeScreen extends StatefulWidget {
-  final Color primarySwatch;
-  HomeScreen(this.primarySwatch);
+  final Color color;
+  HomeScreen({this.color});
   @override
-  _HomeScreenState createState() => _HomeScreenState(primarySwatch);
+  _HomeScreenState createState() => _HomeScreenState(color: color);
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final Color primarySwatch;
-  _HomeScreenState(this.primarySwatch);
+  final Color color;
+  _HomeScreenState({this.color});
   @override
   Widget build(BuildContext context) {
     GlobalKey _scaffold = GlobalKey();
@@ -25,13 +25,15 @@ class _HomeScreenState extends State<HomeScreen> {
           },
         ),
       ),
-      drawer: Drawerr(primarySwatch),
+      drawer: Drawerr(),
       key: _scaffold,
       body: Stack(
         children: <Widget>[
-          RaisedButton(onPressed: () {
-            Navigator.pushNamed(_scaffold.currentContext, '/setting');
-          })
+          Center(
+            child: RaisedButton(onPressed: () {
+              Navigator.pushNamed(_scaffold.currentContext, '/setting');
+            }),
+          )
         ],
       ),
     );

@@ -8,8 +8,8 @@ const kPreferenceColorKey = 'kPreferenceColorKey';
 const Map<String, Color> primarySwatches = {
   'Blue': Colors.blue,
   'Indigo': Colors.indigo,
-  'Pink': Colors.pink,
-  'Yellow': Colors.yellow,
+  'Pink': Colors.pinkAccent,
+  'Yellow': Colors.yellowAccent,
   'Green': Colors.green,
   'Light Green': Colors.lightGreen,
   'Orange': Colors.orange,
@@ -26,25 +26,6 @@ const Map<String, Color> primarySwatches = {
 };
 
 const Map<String, MaterialColor> accentColors = {
-  'Indigo': Colors.indigo,
-  'Blue': Colors.blue,
-  'Green': Colors.green,
-  'Red': Colors.red,
-  'Yellow': Colors.yellow,
-  'Amber': Colors.amber,
-  'Pink': Colors.pink,
-  'Purple': Colors.purple,
-  'Deep Purple': Colors.deepPurple,
-  'Orange': Colors.orange,
-  'Deep Orange': Colors.deepOrange,
-  'Light Blue': Colors.lightBlue,
-  'Light Green': Colors.lightGreen,
-  'Cyan': Colors.cyan,
-  'Lime': Colors.lime,
-  'Teal': Colors.teal,
-};
-
-const Map<String, Color> color = {
   'Indigo': Colors.indigo,
   'Blue': Colors.blue,
   'Green': Colors.green,
