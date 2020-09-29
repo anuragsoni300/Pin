@@ -31,6 +31,7 @@ dependencies:
   flutter_inner_drawer: ^0.5.7+2
   clay_containers: ^0.2.2
   shared_preferences: ^0.5.10
+  http:
 
 dev_dependencies:
   flutter_test:
