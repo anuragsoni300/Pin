@@ -35,7 +35,7 @@ class _MyAppState extends State<MyApp> {
       _primarySwatch = primarySwatches[
               _sharedPreferences.getString(kPreferencePrimarySwatchKey)] ??
           Colors.indigo;
-      _accentColor = accentColors[
+       _accentColor = accentColors[
               _sharedPreferences.getString(kPreferenceAccentColorKey)] ??
           Colors.pinkAccent;
     });

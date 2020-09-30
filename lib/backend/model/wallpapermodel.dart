@@ -1,7 +1,8 @@
 class WallpaperModel {
   String id;
-  String likes;
+  int likes;
   String urls;
+  String blurhash;
 
-  WallpaperModel({this.id, this.likes, this.urls});
+  WallpaperModel({this.id, this.likes, this.urls, this.blurhash});
 }

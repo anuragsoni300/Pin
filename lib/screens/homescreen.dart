@@ -1,9 +1,8 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_blurhash/flutter_blurhash.dart';
+import 'package:pin/backend/fetching/wallpaperfetching.dart';
+import 'package:pin/backend/model/wallpapermodel.dart';
 import 'package:pin/element/drawer.dart';
-import 'package:http/http.dart' as http;
-import 'package:pin/data/api_data.dart';
 
 class HomeScreen extends StatefulWidget {
   final Color color;
@@ -13,11 +12,42 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  ScrollController _scrollController = new ScrollController();
+  List<WallpaperModel> wallpa = [];
+  bool _loading = true;
   int _page = 1;
-  dynamic _wallpapers = [];
-  dynamic _parsedResponse = '';
+
   final Color color;
   _HomeScreenState({this.color});
+
+  @override
+  void initState() {
+    super.initState();
+    getData();
+    _scrollController.addListener(() {
+      if(_scrollController.position.pixels == _scrollController.position.maxScrollExtent){
+        getMoreData();
+      }
+    });
+  }
+
+  getMoreData(){
+    print('object');
+    setState(() {
+      _page++;
+    });
+    getData();
+  }
+
+  getData() async {
+    Wallpaper wall = new Wallpaper();
+    await wall.getWallPaper(_page);
+    wallpa = wall.wallpaper;
+    setState(() {
+      _loading = !_loading;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     GlobalKey _scaffold = GlobalKey();
@@ -34,57 +64,35 @@ class _HomeScreenState extends State<HomeScreen> {
         scaffold: _scaffold,
       ),
       key: _scaffold,
-      body: _wallpapers.isEmpty
-          ? FutureBuilder(
-              future: wallfetch(),
-              builder: (context, snapshot) {
-                if (snapshot.hasData &&
-                    snapshot.connectionState == ConnectionState.done) {
-                  _wallpapers = snapshot.data.toList().map(
-                        (photo) => InkWell(
-                          onTap: () {
-                            Navigator.pushNamed(
-                                _scaffold.currentContext, '/details',
-                                arguments: {
-                                  'id': photo['id'],
-                                  'urls_raw': photo['urls']['raw'],
-                                  'urls_regular': photo['urls']['regular'],
-                                  'user': photo['user'],
-                                  'likes': photo['likes'],
-                                  'color': photo['color'],
-                                  'width': photo['width'],
-                                  'height': photo['height'],
-                                  'created_at': photo['created_at'],
-                                  'links_html': photo['links']['html'],
-                                });
-                          },
-                          child: Container(
-                            child: Hero(
-                              tag: photo['id'],
-                              child: Image.network(photo['urls']['small']),
-                            ),
-                          ),
-                        ),
-                      );
-                  return _renderWallpapers();
-                }
-                return const Center(child: CircularProgressIndicator());
+      body: _loading
+          ? Center(child: CircularProgressIndicator())
+          : ListView.builder(
+              itemCount: wallpa.length,
+              controller: _scrollController,
+              physics: BouncingScrollPhysics(),
+              itemBuilder: (BuildContext context, int index) {
+                return Padding(
+                  padding:
+                      const EdgeInsets.only(left: 10, right: 10, bottom: 10),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(20))),
+                    height: 300,
+                    width: double.infinity,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                      child: BlurHash(
+                        hash: wallpa[index].blurhash,
+                        image: wallpa[index].urls,
+                        curve: Curves.bounceInOut,
+                        imageFit: BoxFit.cover,
+                        duration: Duration(milliseconds: 500),
+                      ),
+                    ),
+                  ),
+                );
               },
-            )
-          : _renderWallpapers(),
+            ),
     );
-  }
-
-  Widget _renderWallpapers() => ListView(
-        children: <Widget>[
-          ..._wallpapers,
-        ],
-      );
-
-  Future wallfetch() async {
-    http.Response response = await http.get(
-        'https://api.unsplash.com/photos/?client_id=$kAccessKey&per_page=30&page=$_page');
-    _parsedResponse = json.decode(response.body);
-    return _parsedResponse;
   }
 }
