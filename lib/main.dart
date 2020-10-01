@@ -5,6 +5,8 @@ import 'package:pin/screens/homescreen.dart';
 import 'package:pin/screens/setting.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'screens/detail.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -35,7 +37,7 @@ class _MyAppState extends State<MyApp> {
       _primarySwatch = primarySwatches[
               _sharedPreferences.getString(kPreferencePrimarySwatchKey)] ??
           Colors.indigo;
-       _accentColor = accentColors[
+      _accentColor = accentColors[
               _sharedPreferences.getString(kPreferenceAccentColorKey)] ??
           Colors.pinkAccent;
     });
@@ -54,6 +56,7 @@ class _MyAppState extends State<MyApp> {
       routes: {
         '/Home': (context) => HomeScreen(),
         '/Favourite': (context) => Favourite(),
+        '/detail': (context) => Detail(),
         '/Setting': (context) => SettingsScreen(
             updateBrightness, updatePrimarySwatch, updateAccentColor),
       },
