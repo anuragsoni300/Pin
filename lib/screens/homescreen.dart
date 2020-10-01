@@ -93,6 +93,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       'likes': wallpa[index].likes,
                       'description': wallpa[index].description,
                       'links': wallpa[index].links,
+                      'portfolioimage': wallpa[index].portfolioimage,
                     });
               },
               child: Padding(

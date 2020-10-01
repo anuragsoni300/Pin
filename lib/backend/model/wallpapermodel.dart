@@ -7,6 +7,7 @@ class WallpaperModel {
   int width;
   String description;
   String links;
+  String portfolioimage;
 
   WallpaperModel({
     this.id,
@@ -17,5 +18,6 @@ class WallpaperModel {
     this.description,
     this.links,
     this.width,
+    this.portfolioimage,
   });
 }
