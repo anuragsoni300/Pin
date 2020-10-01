@@ -25,7 +25,10 @@ class Wallpaper {
             likes: element['likes'],
             urls: element['urls']['small'],
             blurhash: element['blur_hash'],
-            
+            description: element['description'],
+            height: element['height'],
+            links: element['links']['portfolio'],
+            width: element['width'],
           );
           wallpaper.add(articalModel);
         }
