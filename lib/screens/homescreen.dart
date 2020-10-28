@@ -40,9 +40,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
   getMoreData() {
     print('object');
-    setState(() {
-      getData();
-    });
+    getData();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 
   getData() async {
