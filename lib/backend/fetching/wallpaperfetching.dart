@@ -12,7 +12,11 @@ class Wallpaper {
   Future<List<WallpaperModel>> getWallPaper() async {
     page++;
     String link =
+<<<<<<< HEAD
         'https://api.unsplash.com/photos/?client_id=$kAccessKey&per_page=10&page=$page';
+=======
+        'https://api.unsplash.com/photos/?client_id=$kAccessKey&per_page=4&page=$page';
+>>>>>>> ceb6de670de9eee4c4ed8acb6b3c8592c6681adc
     var response = await http.get(link);
     var jsondata = jsonDecode(response.body);
 

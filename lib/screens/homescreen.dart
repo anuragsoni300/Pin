@@ -41,10 +41,17 @@ class _HomeScreenState extends State<HomeScreen> {
     //  });
   }
 
+<<<<<<< HEAD
   //  _getMoreData() async {
   //    print('object');
   //    _getData();
   //  }
+=======
+  getMoreData() {
+    print('object');
+    getData();
+  }
+>>>>>>> ceb6de670de9eee4c4ed8acb6b3c8592c6681adc
 
   @override
   void dispose() {
