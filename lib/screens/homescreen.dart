@@ -33,25 +33,13 @@ class _HomeScreenState extends State<HomeScreen> {
     //        _scrollController.position.maxScrollExtent) {
     //          tt = true;
     //      //watch++;
-      //  }
-      // //  if (watch == 2) {
-      // //    watch = 0;
-      // //    _getMoreData();
+    //  }
+    // //  if (watch == 2) {
+    // //    watch = 0;
+    // //    _getMoreData();
     //   //  }
     //  });
   }
-
-<<<<<<< HEAD
-  //  _getMoreData() async {
-  //    print('object');
-  //    _getData();
-  //  }
-=======
-  getMoreData() {
-    print('object');
-    getData();
-  }
->>>>>>> ceb6de670de9eee4c4ed8acb6b3c8592c6681adc
 
   @override
   void dispose() {
@@ -95,7 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
           //controller: _scrollController,
           physics: BouncingScrollPhysics(),
           itemBuilder: (BuildContext context, int index) {
-            if(index == wallpa.length - 1){
+            if (index == wallpa.length - 1) {
               _getData();
             }
             return new GestureDetector(
@@ -125,14 +113,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     borderRadius: BorderRadius.all(Radius.circular(20)),
                     child: Hero(
                       tag: 'wallpaper$index',
-                      child: Center(child: Text('$index')),
-                      // child: BlurHash(
-                      //   hash: wallpa[index].blurhash,
-                      //   image: wallpa[index].urls,
-                      //   curve: Curves.bounceInOut,
-                      //   imageFit: BoxFit.cover,
-                      //   duration: Duration(milliseconds: 0),
-                      // ),
+                      child: BlurHash(
+                        hash: wallpa[index].blurhash,
+                        image: wallpa[index].urls,
+                        curve: Curves.bounceInOut,
+                        imageFit: BoxFit.cover,
+                        duration: Duration(milliseconds: 0),
+                      ),
                     ),
                   ),
                 ),
