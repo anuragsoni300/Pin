@@ -16,8 +16,10 @@ class _HomeScreenState extends State<HomeScreen> {
   Wallpaper wall = Wallpaper();
   ScrollController _scrollController = new ScrollController();
   List<WallpaperModel> wallpa = [];
+  List<WallpaperModel> temp = [];
   bool _loading = true;
   int watch = 0;
+  bool tt = false;
 
   final Color color;
   _HomeScreenState({this.color});
@@ -25,30 +27,36 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    getData();
-    _scrollController.addListener(() {
-      if (_scrollController.position.pixels ==
-          _scrollController.position.maxScrollExtent) {
-        watch++;
-      }
-      if (watch == 2) {
-        watch = 0;
-        getMoreData();
-      }
-    });
+    _getData();
+    //  _scrollController.addListener(() {
+    //    if (_scrollController.position.pixels ==
+    //        _scrollController.position.maxScrollExtent) {
+    //          tt = true;
+    //      //watch++;
+      //  }
+      // //  if (watch == 2) {
+      // //    watch = 0;
+      // //    _getMoreData();
+    //   //  }
+    //  });
   }
 
-  getMoreData() {
-    print('object');
-    setState(() {
-      getData();
-    });
+  //  _getMoreData() async {
+  //    print('object');
+  //    _getData();
+  //  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 
-  getData() async {
-    await wall.getWallPaper();
+  _getData() async {
+    temp = await wall.getWallPaper();
     wallpa = wall.wallpaper;
     setState(() {
+      tt = false;
       _loading = !_loading;
     });
   }
@@ -73,14 +81,17 @@ class _HomeScreenState extends State<HomeScreen> {
         animSpeedFactor: 2.0,
         springAnimationDurationInMilliseconds: 400,
         onRefresh: () {
-          return getData();
+          return _getData();
         },
         child: ListView.builder(
           itemCount: wallpa.length,
-          controller: _scrollController,
+          //controller: _scrollController,
           physics: BouncingScrollPhysics(),
           itemBuilder: (BuildContext context, int index) {
-            return GestureDetector(
+            if(index == wallpa.length - 1){
+              _getData();
+            }
+            return new GestureDetector(
               onTap: () async {
                 //Navigator.pop(context);
                 Navigator.pushNamed(_scaffold.currentContext, '/detail',
@@ -107,13 +118,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     borderRadius: BorderRadius.all(Radius.circular(20)),
                     child: Hero(
                       tag: 'wallpaper$index',
-                      child: BlurHash(
-                        hash: wallpa[index].blurhash,
-                        image: wallpa[index].urls,
-                        curve: Curves.bounceInOut,
-                        imageFit: BoxFit.cover,
-                        duration: Duration(milliseconds: 0),
-                      ),
+                      child: Center(child: Text('$index')),
+                      // child: BlurHash(
+                      //   hash: wallpa[index].blurhash,
+                      //   image: wallpa[index].urls,
+                      //   curve: Curves.bounceInOut,
+                      //   imageFit: BoxFit.cover,
+                      //   duration: Duration(milliseconds: 0),
+                      // ),
                     ),
                   ),
                 ),
