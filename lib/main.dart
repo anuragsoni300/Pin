@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:pin/data/data.dart';
 import 'package:pin/screens/favourite.dart';
 import 'package:pin/screens/homescreen.dart';
@@ -45,8 +46,8 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
     return MaterialApp(
-      
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         brightness: _brightness,

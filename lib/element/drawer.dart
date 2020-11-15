@@ -60,7 +60,7 @@ class _DrawerrState extends State<Drawerr> {
                     child: GestureDetector(
                       onTap: () {
                         String texts = text[index];
-                        Navigator.pushNamed(scaffold.currentContext, '/$texts');
+                        Navigator.pushNamed(context, '/$texts');
                       },
                       child: ClayContainer(
                         curveType: CurveType.concave,
