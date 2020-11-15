@@ -1,9 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_blurhash/flutter_blurhash.dart';
+import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:pin/backend/fetching/wallpaperfetching.dart';
 import 'package:pin/backend/model/wallpapermodel.dart';
 import 'package:pin/element/drawer.dart';
-import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 
 class HomeScreen extends StatefulWidget {
   final Color color;
@@ -13,45 +15,22 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  Wallpaper wall = Wallpaper();
-  ScrollController _scrollController = new ScrollController();
-  List<WallpaperModel> wallpa = [];
-  List<WallpaperModel> temp = [];
   bool _loading = true;
-  int watch = 0;
-  bool tt = false;
-
+  final Wallpaper wall = Wallpaper();
+  List<WallpaperModel> wallpa;
   final Color color;
   _HomeScreenState({this.color});
 
   @override
   void initState() {
     super.initState();
-    _getData();
-    //  _scrollController.addListener(() {
-    //    if (_scrollController.position.pixels ==
-    //        _scrollController.position.maxScrollExtent) {
-    //          tt = true;
-    //      //watch++;
-    //  }
-    // //  if (watch == 2) {
-    // //    watch = 0;
-    // //    _getMoreData();
-    //   //  }
-    //  });
+    getData();
   }
 
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
-  }
-
-  _getData() async {
-    temp = await wall.getWallPaper();
-    wallpa = wall.wallpaper;
+  getData() async {
+    await wall.getWallPaper();
+    wallpa = wall.wallpapers;
     setState(() {
-      tt = false;
       _loading = !_loading;
     });
   }
@@ -71,36 +50,32 @@ class _HomeScreenState extends State<HomeScreen> {
       drawer: Drawerr(
         scaffold: _scaffold,
       ),
-      key: _scaffold,
       body: LiquidPullToRefresh(
         animSpeedFactor: 2.0,
         springAnimationDurationInMilliseconds: 400,
         onRefresh: () {
-          return _getData();
+          return getData();
         },
         child: ListView.builder(
           itemCount: wallpa.length,
-          //controller: _scrollController,
           physics: BouncingScrollPhysics(),
           itemBuilder: (BuildContext context, int index) {
             if (index == wallpa.length - 1) {
-              _getData();
+              getData();
             }
             return new GestureDetector(
               onTap: () async {
-                //Navigator.pop(context);
-                Navigator.pushNamed(_scaffold.currentContext, '/detail',
-                    arguments: {
-                      'image': wallpa[index].urls,
-                      'hash': wallpa[index].blurhash,
-                      'index': index,
-                      'width': wallpa[index].width,
-                      'height': wallpa[index].height,
-                      'likes': wallpa[index].likes,
-                      'description': wallpa[index].description,
-                      'links': wallpa[index].links,
-                      'portfolioimage': wallpa[index].portfolioimage,
-                    });
+                Navigator.pushNamed(context, '/detail', arguments: {
+                  'image': wallpa[index].urls,
+                  'hash': wallpa[index].blurhash,
+                  'index': index,
+                  'width': wallpa[index].width,
+                  'height': wallpa[index].height,
+                  'likes': wallpa[index].likes,
+                  'description': wallpa[index].description,
+                  'links': wallpa[index].links,
+                  'portfolioimage': wallpa[index].portfolioimage,
+                });
               },
               child: Padding(
                 padding: const EdgeInsets.only(left: 10, right: 10, bottom: 10),

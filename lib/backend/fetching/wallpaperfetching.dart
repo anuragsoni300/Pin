@@ -7,7 +7,7 @@ import 'package:pin/data/api_data.dart';
 
 class Wallpaper {
   int page = 0;
-  List<WallpaperModel> wallpaper = [];
+  List<WallpaperModel> wallpapers= [];
 
   Future<List<WallpaperModel>> getWallPaper() async {
     page++;
@@ -31,10 +31,10 @@ class Wallpaper {
             width: element['width'],
             portfolioimage: element['user']['profile_image']['large'],
           );
-          wallpaper.add(articalModel);
+          wallpapers.add(articalModel);
         }
       },
     );
-    return wallpaper;
+    return wallpapers;
   }
 }
