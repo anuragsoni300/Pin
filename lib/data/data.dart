@@ -5,6 +5,8 @@ const kPreferencePrimarySwatchKey = 'kPreferencePrimarySwatchKey';
 const kPreferenceAccentColorKey = 'kPreferenceAccentColorKey';
 const kPreferenceColorKey = 'kPreferenceColorKey';
 
+String table = 'favorites';
+
 const Map<String, Color> primarySwatches = {
   'Blue': Colors.blue,
   'Indigo': Colors.indigo,

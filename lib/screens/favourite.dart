@@ -6,10 +6,10 @@ class Favourite extends StatefulWidget {
 }
 
 class _FavouriteState extends State<Favourite> {
+  dynamic fav = [];
   @override
   Widget build(BuildContext context) {
-    return Container(
-      
-    );
+    return Scaffold();
   }
+
 }
