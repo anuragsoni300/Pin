@@ -107,25 +107,6 @@ class _DetailState extends State<Detail> {
                                       ConnectionState.done) {
                                 if (snapshot.data) {
                                   return IconButton(
-                                    icon: Icon(Icons.favorite_border),
-                                    onPressed: () async {
-                                      DatabaseHelper.instance.insert({
-                                        DatabaseHelper.id: detail['id'],
-                                        DatabaseHelper.urls: detail['image'],
-                                        DatabaseHelper.blurhash: detail['hash'],
-                                        DatabaseHelper.width: detail['width'],
-                                        DatabaseHelper.height: detail['height'],
-                                        DatabaseHelper.likes: detail['likes'],
-                                        DatabaseHelper.description:
-                                            detail['description'],
-                                        DatabaseHelper.links: detail['links'],
-                                        DatabaseHelper.portfolioimage:
-                                            detail['portfolioimage'],
-                                      });
-                                    },
-                                  );
-                                } else
-                                  return IconButton(
                                     icon: Icon(Icons.favorite),
                                     onPressed: () async {
                                       DatabaseHelper.instance.insert({
@@ -143,9 +124,10 @@ class _DetailState extends State<Detail> {
                                       });
                                     },
                                   );
+                                } 
                               }
                               return IconButton(
-                                icon: Icon(Icons.favorite),
+                                icon: Icon(Icons.favorite_border),
                                 onPressed: () async {
                                   DatabaseHelper.instance.insert({
                                     DatabaseHelper.id: detail['id'],

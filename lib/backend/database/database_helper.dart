@@ -10,7 +10,7 @@ class DatabaseHelper{
   
   static final _dbname = 'PIN.db';
   static final _dbversion = 1;
-  static final _tablename = 'favorites';
+  static final _tablename = 'fav1';
   static final primeid = '_id';
   static final id = 'id';
   static final likes = 'likes';
@@ -47,9 +47,9 @@ class DatabaseHelper{
       '''
       CREATE TABLE $_tablename(
        $primeid  INTEGER PRIMARY KEY AUTOINCREMENT,
-       $id TEXT,
+       $id TEXT NOT NULL UNIQUE,
        $likes INT,
-       $urls TEXT,
+       $urls TEXT NOT NULL,
        $blurhash TEXT,
        $height INT,
        $width INT,
