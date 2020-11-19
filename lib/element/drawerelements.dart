@@ -8,6 +8,6 @@ List<Icon> icons = [
 
 List<String> text = [
   'Home',
-  'Favorite',
+  'Favourite',
   'Setting',
 ];

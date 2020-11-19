@@ -6,6 +6,8 @@ const kPreferenceAccentColorKey = 'kPreferenceAccentColorKey';
 const kPreferenceColorKey = 'kPreferenceColorKey';
 
 String table = 'favorites';
+String favdata;
+List<Map<String, dynamic>> fav = [];
 
 const Map<String, Color> primarySwatches = {
   'Blue': Colors.blue,

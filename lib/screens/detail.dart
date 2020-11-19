@@ -2,6 +2,7 @@ import 'package:clay_containers/clay_containers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_blurhash/flutter_blurhash.dart';
 import 'package:pin/backend/database/database_helper.dart';
+import 'package:pin/data/data.dart';
 
 class Detail extends StatefulWidget {
   final ImageProvider image;
@@ -12,7 +13,20 @@ class Detail extends StatefulWidget {
 }
 
 class _DetailState extends State<Detail> {
-  bool fav = false;
+  @override
+  void initState() {
+    super.initState();
+    checkfav();
+  }
+
+  checkfav() async {
+    bool data = await DatabaseHelper.instance.queryFav(favdata);
+    setState(() {
+      notfav = data;
+    });
+  }
+
+  bool notfav = false;
   final ImageProvider image;
 
   _DetailState(this.image);
@@ -99,37 +113,16 @@ class _DetailState extends State<Detail> {
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
                         children: [
-                          FutureBuilder(
-                            future: isPhotoFavorite(detail['id']),
-                            builder: (context, snapshot) {
-                              if (snapshot.hasData &&
-                                  snapshot.connectionState ==
-                                      ConnectionState.done) {
-                                if (snapshot.data) {
-                                  return IconButton(
-                                    icon: Icon(Icons.favorite),
-                                    onPressed: () async {
-                                      DatabaseHelper.instance.insert({
-                                        DatabaseHelper.id: detail['id'],
-                                        DatabaseHelper.urls: detail['image'],
-                                        DatabaseHelper.blurhash: detail['hash'],
-                                        DatabaseHelper.width: detail['width'],
-                                        DatabaseHelper.height: detail['height'],
-                                        DatabaseHelper.likes: detail['likes'],
-                                        DatabaseHelper.description:
-                                            detail['description'],
-                                        DatabaseHelper.links: detail['links'],
-                                        DatabaseHelper.portfolioimage:
-                                            detail['portfolioimage'],
-                                      });
-                                    },
-                                  );
-                                } 
-                              }
-                              return IconButton(
-                                icon: Icon(Icons.favorite_border),
-                                onPressed: () async {
-                                  DatabaseHelper.instance.insert({
+                          IconButton(
+                            icon: Icon(notfav
+                                ? Icons.favorite_border
+                                : Icons.favorite),
+                            onPressed: () {
+                              if (!notfav) {
+                                DatabaseHelper.instance.delete(detail['id']);
+                              } else {
+                                DatabaseHelper.instance.insert(
+                                  {
                                     DatabaseHelper.id: detail['id'],
                                     DatabaseHelper.urls: detail['image'],
                                     DatabaseHelper.blurhash: detail['hash'],
@@ -141,11 +134,61 @@ class _DetailState extends State<Detail> {
                                     DatabaseHelper.links: detail['links'],
                                     DatabaseHelper.portfolioimage:
                                         detail['portfolioimage'],
-                                  });
-                                },
-                              );
+                                  },
+                                );
+                              }
+                              setState(() {
+                                notfav = !notfav;
+                              });
                             },
                           ),
+                          // FutureBuilder(
+                          //   future: isPhotoFavorite(detail['id']),
+                          //   builder: (context, snapshot) {
+                          //     if (snapshot.hasData &&
+                          //         snapshot.connectionState ==
+                          //             ConnectionState.done) {
+                          //       if (snapshot.data) {
+                          //         return IconButton(
+                          //           icon: Icon(isfav
+                          //               ? Icons.favorite
+                          //               : Icons.favorite_border),
+                          //           onPressed: () async {
+                          //             DatabaseHelper.instance
+                          //                 .delete(detail['id']);
+                          //             setState(() {
+                          //               isfav = false;
+                          //             });
+                          //           },
+                          //         );
+                          //       }
+                          //     }
+                          //     return IconButton(
+                          //       icon: Icon(isfav
+                          //           ? Icons.favorite
+                          //           : Icons.favorite_border),
+                          //       onPressed: () async {
+                          //         DatabaseHelper.instance.insert({
+                          //           DatabaseHelper.id: detail['id'],
+                          //           DatabaseHelper.urls: detail['image'],
+                          //           DatabaseHelper.blurhash: detail['hash'],
+                          //           DatabaseHelper.width: detail['width'],
+                          //           DatabaseHelper.height: detail['height'],
+                          //           DatabaseHelper.likes: detail['likes'],
+                          //           DatabaseHelper.description:
+                          //               detail['description'],
+                          //           DatabaseHelper.links: detail['links'],
+                          //           DatabaseHelper.portfolioimage:
+                          //               detail['portfolioimage'],
+                          //         });
+
+                          //         setState(() {
+                          //           isfav = true;
+                          //         });
+                          //       },
+                          //     );
+                          //   },
+                          // ),
                           SizedBox(
                             width: 5,
                           ),
@@ -206,8 +249,9 @@ class _DetailState extends State<Detail> {
                           IconButton(
                             icon: Icon(Icons.file_download),
                             onPressed: () async {
-                            List<Map<String,dynamic>> q = await DatabaseHelper.instance.queryAll();
-                            print(q);
+                              List<Map<String, dynamic>> q =
+                                  await DatabaseHelper.instance.queryAll();
+                              print(q);
                             },
                           ),
                           Text(
@@ -227,10 +271,5 @@ class _DetailState extends State<Detail> {
         ),
       ),
     );
-  }
-
-  Future isPhotoFavorite(String pid) async {
-    //List<Map> result = await DatabaseHelper.instance.queryAll(table);
-    // return result.isEmpty;
   }
 }

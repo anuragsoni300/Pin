@@ -5,9 +5,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:sqflite/sqlite_api.dart';
 import 'package:path/path.dart';
 
-class DatabaseHelper{
-
-  
+class DatabaseHelper {
   static final _dbname = 'PIN.db';
   static final _dbversion = 1;
   static final _tablename = 'fav1';
@@ -26,10 +24,8 @@ class DatabaseHelper{
   static final DatabaseHelper instance = DatabaseHelper._privatecontructor();
 
   static Database _database;
-  Future<Database> get database async{
-
-    if(_database!=null)
-      return _database;
+  Future<Database> get database async {
+    if (_database != null) return _database;
 
     _database = await _initiateDatabase();
     return _database;
@@ -38,13 +34,12 @@ class DatabaseHelper{
   _initiateDatabase() async {
     Directory directory = await getApplicationDocumentsDirectory();
     print(directory);
-    String path = join(directory.path,_dbname);
-    return await openDatabase(path,version: _dbversion,onCreate: _onCreate);
+    String path = join(directory.path, _dbname);
+    return await openDatabase(path, version: _dbversion, onCreate: _onCreate);
   }
 
-  Future _onCreate(Database db,int version){
-    db.execute(
-      '''
+  Future _onCreate(Database db, int version) {
+    db.execute('''
       CREATE TABLE $_tablename(
        $primeid  INTEGER PRIMARY KEY AUTOINCREMENT,
        $id TEXT NOT NULL UNIQUE,
@@ -57,30 +52,28 @@ class DatabaseHelper{
        $links TEXT,
        $portfolioimage TEXT
       )
-      '''
-    );
+      ''');
   }
 
-  Future<int> insert(Map<String,dynamic> row) async{
+  Future<int> insert(Map<String, dynamic> row) async {
+    Database db = await instance.database;
+    return await db.insert(_tablename, row);
+  }
 
-  Database db = await instance.database;
-  return await db.insert(_tablename, row);
-
-}
-
-  Future<List<Map<String,dynamic>>> queryAll() async {
-
+  Future<List<Map<String, dynamic>>> queryAll() async {
     Database db = await instance.database;
     return await db.query(_tablename);
-  
+  }
 
+  Future queryFav(String favdata) async {
+    Database db = await instance.database;
+    List<Map<String, dynamic>> favornot = await db.query(_tablename,
+        columns: ['id'], where: 'id = ?', whereArgs: [favdata]);
+    return favornot.isEmpty;
   }
 
   Future delete(String pid) async {
-
     Database db = await instance.database;
-    return await db.delete(_tablename,where: 'id = ?',whereArgs: [pid]);
-
+    return await db.delete(_tablename, where: 'id = ?', whereArgs: [pid]);
   }
-
 }
