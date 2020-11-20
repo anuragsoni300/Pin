@@ -12,8 +12,7 @@ ________________________________
 
 <br />
 
-### Before using this you must go to **unsplash** website and get an API Accesskey for yourself.
-### Then change **data/api_data** to your api Acceesskey.
+### This is jus a simple wallpaper app.
 
 <br />
 
