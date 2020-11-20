@@ -3,12 +3,11 @@ ________________________________
 
 ### Screenshots
 
-| ![Screenshot-1](Screenshots/1.png) | ![](Screenshots/2.png) | ![](Screenshots/3.png) |
+| ![Screenshot-1](screenshots/1.png) | ![](screenshots/2.png) | ![](screenshots/3.png) |
 | ---------------------------------- | ---------------------- | ---------------------- |
-| ![Screenshot-2](Screenshots/4.png) | ![](Screenshots/5.png) | ![](Screenshots/6.png) |
+| ![Screenshot-2](screenshots/4.png) | ![](screenshots/5.png) | ![](screenshots/6.png) |
 | ---------------------------------- | -----------------------| -----------------------| 
-| ![Screenshot-3](Screenshots/7.png) | ![](Screenshots/8.png) | ![](Screenshots/9.png) |
-| ---------------------------------- | ---------------------- | ---------------------- |
+| ![Screenshot-3](screenshots/7.png) | ![](screenshots/8.png) | ![](screenshots/9.png) |
 
 
 <br />
