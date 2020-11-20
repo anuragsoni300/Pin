@@ -125,21 +125,6 @@ class _DrawerrState extends State<Drawerr> {
                             )
                           ],
                         ),
-                        // child: ListTile(
-                        //   leading: CircleAvatar(
-                        //     radius: 20,
-                        //     backgroundImage: NetworkImage(
-                        //         'https://avatars2.githubusercontent.com/u/42229055?s=400&u=f93b187ca2023a263efefc592c0a59918e7b1330&v=4'),
-                        //   ),
-                        //   trailing: IconButton(
-                        //     icon: Icon(Icons.link),
-                        //     onPressed: () async {
-                        //       if (await canLaunch(
-                        //           'https://github.com/anuragsoni300'))
-                        //         launch('https://github.com/anuragsoni300');
-                        //     },
-                        //   ),
-                        // ),
                       ),
                     ),
                   ),
