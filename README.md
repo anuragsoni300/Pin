@@ -3,9 +3,13 @@ ________________________________
 
 ### Screenshots
 
-| ![Screenshot-1](Screenshots/1.jpg) | ![](Screenshots/2.jpg) | ![](Screenshots/3.jpg) |
+| ![Screenshot-1](Screenshots/1.png) | ![](Screenshots/2.png) | ![](Screenshots/3.png) |
 | ---------------------------------- | ---------------------- | ---------------------- |
-| ![Screenshot-2](Screenshots/4.jpg) | ![](Screenshots/5.png) | ![](Screenshots/6.jpg) |
+| ![Screenshot-2](Screenshots/4.png) | ![](Screenshots/5.png) | ![](Screenshots/6.png) |
+| ---------------------------------- | -----------------------| -----------------------| 
+| ![Screenshot-3](Screenshots/7.png) | ![](Screenshots/8.png) | ![](Screenshots/9.png) |
+| ---------------------------------- | ---------------------- | ---------------------- |
+
 
 <br />
 
