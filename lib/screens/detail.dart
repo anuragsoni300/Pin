@@ -1,3 +1,9 @@
+import 'dart:typed_data';
+import 'dart:ui';
+import 'package:dio/dio.dart';
+import 'package:image_gallery_saver/image_gallery_saver.dart';
+import 'package:intent/intent.dart' as intent;
+import 'package:intent/action.dart' as action;
 import 'package:clay_containers/clay_containers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_blurhash/flutter_blurhash.dart';
@@ -49,7 +55,7 @@ class _DetailState extends State<Detail> {
               height: MediaQuery.of(context).size.height * 0.8,
               width: MediaQuery.of(context).size.width,
               child: Padding(
-                padding: const EdgeInsets.only(top: 40, left: 15, right: 15),
+                padding: const EdgeInsets.only(top: 20, left: 15, right: 15),
                 child: ClayContainer(
                   borderRadius: 20,
                   color: Theme.of(context).brightness == Brightness.dark
@@ -57,15 +63,59 @@ class _DetailState extends State<Detail> {
                       : Color.fromRGBO(242, 242, 242, 1),
                   child: ClipRRect(
                     borderRadius: BorderRadius.all(Radius.circular(20)),
-                    child: Hero(
-                      tag: 'wallpaper$index',
-                      child: BlurHash(
-                        hash: detail['hash'],
-                        image: detail['image'],
-                        curve: Curves.bounceInOut,
-                        imageFit: BoxFit.cover,
-                        duration: Duration(milliseconds: 0),
-                      ),
+                    child: Stack(
+                      children: <Widget>[
+                        Hero(
+                          tag: 'wallpaper$index',
+                          child: BlurHash(
+                            hash: detail['hash'],
+                            image: detail['image'],
+                            curve: Curves.bounceInOut,
+                            imageFit: BoxFit.cover,
+                            duration: Duration(milliseconds: 0),
+                          ),
+                        ),
+                        Align(
+                          alignment: Alignment.bottomCenter,
+                          child: GestureDetector(
+                            onTap: () {
+                              intent.Intent()
+                                ..setAction(action.Action.ACTION_SET_WALLPAPER)
+                                ..startActivityForResult().then(
+                                  (_) => print(_),
+                                  onError: (e) => print(e),
+                                );
+                            },
+                            child: ClipRRect(
+                              child: BackdropFilter(
+                                filter:
+                                    ImageFilter.blur(sigmaX: 15, sigmaY: 15),
+                                child: Container(
+                                  height:
+                                      MediaQuery.of(context).size.height / 16,
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                      color: Theme.of(context).brightness ==
+                                              Brightness.dark
+                                          ? Color.fromRGBO(242, 242, 242, 0.35)
+                                          : Color.fromRGBO(45, 45, 45, 0.35)),
+                                  child: Center(
+                                      child: Text(
+                                    'SET AS WALLPAPER',
+                                    style: TextStyle(
+                                      fontSize: 24,
+                                      color: Theme.of(context).brightness ==
+                                              Brightness.dark
+                                          ? Color.fromRGBO(45, 45, 45, 1)
+                                          : Color.fromRGBO(242, 242, 242, 1),
+                                    ),
+                                  )),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
@@ -142,53 +192,6 @@ class _DetailState extends State<Detail> {
                               });
                             },
                           ),
-                          // FutureBuilder(
-                          //   future: isPhotoFavorite(detail['id']),
-                          //   builder: (context, snapshot) {
-                          //     if (snapshot.hasData &&
-                          //         snapshot.connectionState ==
-                          //             ConnectionState.done) {
-                          //       if (snapshot.data) {
-                          //         return IconButton(
-                          //           icon: Icon(isfav
-                          //               ? Icons.favorite
-                          //               : Icons.favorite_border),
-                          //           onPressed: () async {
-                          //             DatabaseHelper.instance
-                          //                 .delete(detail['id']);
-                          //             setState(() {
-                          //               isfav = false;
-                          //             });
-                          //           },
-                          //         );
-                          //       }
-                          //     }
-                          //     return IconButton(
-                          //       icon: Icon(isfav
-                          //           ? Icons.favorite
-                          //           : Icons.favorite_border),
-                          //       onPressed: () async {
-                          //         DatabaseHelper.instance.insert({
-                          //           DatabaseHelper.id: detail['id'],
-                          //           DatabaseHelper.urls: detail['image'],
-                          //           DatabaseHelper.blurhash: detail['hash'],
-                          //           DatabaseHelper.width: detail['width'],
-                          //           DatabaseHelper.height: detail['height'],
-                          //           DatabaseHelper.likes: detail['likes'],
-                          //           DatabaseHelper.description:
-                          //               detail['description'],
-                          //           DatabaseHelper.links: detail['links'],
-                          //           DatabaseHelper.portfolioimage:
-                          //               detail['portfolioimage'],
-                          //         });
-
-                          //         setState(() {
-                          //           isfav = true;
-                          //         });
-                          //       },
-                          //     );
-                          //   },
-                          // ),
                           SizedBox(
                             width: 5,
                           ),
@@ -249,9 +252,9 @@ class _DetailState extends State<Detail> {
                           IconButton(
                             icon: Icon(Icons.file_download),
                             onPressed: () async {
-                              List<Map<String, dynamic>> q =
-                                  await DatabaseHelper.instance.queryAll();
-                              print(q);
+                              _save(detail['image']);
+                              // if (await canLaunch(detail['image']))
+                              //   launch(detail['image']);
                             },
                           ),
                           Text(
@@ -271,5 +274,14 @@ class _DetailState extends State<Detail> {
         ),
       ),
     );
+  }
+
+  _save(url) async {
+    var response = await Dio()
+        .get(url, options: Options(responseType: ResponseType.bytes));
+    final result =
+        await ImageGallerySaver.saveImage(Uint8List.fromList(response.data));
+    print(result);
+    Navigator.pop(context);
   }
 }

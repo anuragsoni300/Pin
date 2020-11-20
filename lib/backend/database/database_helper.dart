@@ -38,7 +38,7 @@ class DatabaseHelper {
     return await openDatabase(path, version: _dbversion, onCreate: _onCreate);
   }
 
-  Future _onCreate(Database db, int version) {
+  Future<void> _onCreate(Database db, int version) {
     db.execute('''
       CREATE TABLE $_tablename(
        $primeid  INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -53,6 +53,7 @@ class DatabaseHelper {
        $portfolioimage TEXT
       )
       ''');
+    return null;
   }
 
   Future<int> insert(Map<String, dynamic> row) async {

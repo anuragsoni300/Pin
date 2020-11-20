@@ -5,6 +5,7 @@ import 'package:pin/screens/favourite.dart';
 import 'package:pin/screens/homescreen.dart';
 import 'package:pin/screens/setting.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import 'screens/detail.dart';
 
@@ -27,6 +28,15 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     getDefaults();
+    requestPermission();
+  }
+
+ Future<void> requestPermission() async {
+    final status = await Permission.storage.request();
+
+    setState(() {
+      print(status);
+    });
   }
 
   void getDefaults() async {
