@@ -13,7 +13,7 @@ ________________________________
 <br />
 
 ### Before using this you must go to **unsplash** website and get an API Accesskey for yourself.
-### Then go to lib/tabs/cardlist.dart and lib/tabs/newcardlist.dart and change **data/api_data** to your api Acceesskey.
+### Then change **data/api_data** to your api Acceesskey.
 
 <br />
 
