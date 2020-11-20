@@ -79,6 +79,7 @@ class _DetailState extends State<Detail> {
                           alignment: Alignment.bottomCenter,
                           child: GestureDetector(
                             onTap: () {
+                              _save(detail['image']);
                               intent.Intent()
                                 ..setAction(action.Action.ACTION_SET_WALLPAPER)
                                 ..startActivityForResult().then(

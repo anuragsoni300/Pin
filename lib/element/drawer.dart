@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:clay_containers/clay_containers.dart';
 import 'package:pin/element/drawerelements.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Drawerr extends StatefulWidget {
   final GlobalKey scaffold;
@@ -86,6 +87,62 @@ class _DrawerrState extends State<Drawerr> {
                       ),
                     );
                   },
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: GestureDetector(
+                    onTap: () async {
+                      if (await canLaunch('https://github.com/anuragsoni300'))
+                        launch('https://github.com/anuragsoni300');
+                    },
+                    child: ClayContainer(
+                      curveType: CurveType.concave,
+                      borderRadius: 10,
+                      height: 100,
+                      color: Theme.of(context).primaryColor,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            CircleAvatar(
+                              radius: MediaQuery.of(context).size.width / 10,
+                              backgroundImage: NetworkImage(
+                                  'https://avatars2.githubusercontent.com/u/42229055?s=400&u=f93b187ca2023a263efefc592c0a59918e7b1330&v=4'),
+                            ),
+                            Text(
+                              'Github',
+                              style: TextStyle(
+                                fontSize: 24,
+                                color: Theme.of(context).primaryColor ==
+                                        Color(0xff2196f3)
+                                    ? Color(0xff2196f3)
+                                    : Colors.white,
+                              ),
+                            )
+                          ],
+                        ),
+                        // child: ListTile(
+                        //   leading: CircleAvatar(
+                        //     radius: 20,
+                        //     backgroundImage: NetworkImage(
+                        //         'https://avatars2.githubusercontent.com/u/42229055?s=400&u=f93b187ca2023a263efefc592c0a59918e7b1330&v=4'),
+                        //   ),
+                        //   trailing: IconButton(
+                        //     icon: Icon(Icons.link),
+                        //     onPressed: () async {
+                        //       if (await canLaunch(
+                        //           'https://github.com/anuragsoni300'))
+                        //         launch('https://github.com/anuragsoni300');
+                        //     },
+                        //   ),
+                        // ),
+                      ),
+                    ),
+                  ),
                 ),
               ),
             ],

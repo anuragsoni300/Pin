@@ -23,7 +23,7 @@ class Wallpaper {
           WallpaperModel articalModel = WallpaperModel(
             id: element['id'],
             likes: element['likes'],
-            urls: element['urls']['small'],
+            urls: element['urls']['full'],
             blurhash: element['blur_hash'],
             description: element['user']['name'],
             height: element['height'],

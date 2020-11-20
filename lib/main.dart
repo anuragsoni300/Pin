@@ -31,12 +31,9 @@ class _MyAppState extends State<MyApp> {
     requestPermission();
   }
 
- Future<void> requestPermission() async {
-    final status = await Permission.storage.request();
-
-    setState(() {
-      print(status);
-    });
+  Future<void> requestPermission() async {
+    await Permission.storage.request();
+    setState(() {});
   }
 
   void getDefaults() async {
